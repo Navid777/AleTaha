@@ -3,3 +3,4 @@ AleTaha/__pycache__/
 env/
 db.sqlite3
 *.pyc
+AleTaha/local_settings.py

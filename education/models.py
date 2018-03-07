@@ -21,6 +21,8 @@ class Student(models.Model):
     address = models.TextField(verbose_name='آدرس')
     phone = models.CharField(max_length=15, verbose_name='شماره تلفن')
     image = models.ImageField(verbose_name='عکس')
+    father_name = models.CharField(max_length=500, verbose_name='نام پدر')
+    year_of_birth = models.PositiveIntegerField(verbose_name='سال تولد')
 
     def __str__(self):
         return self.user.get_full_name()

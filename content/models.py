@@ -1,16 +1,23 @@
 from django.db import models
 
 
+class ContentCategory(models.Model):
+    title = models.CharField(max_length=1000, verbose_name='عنوان')
+    description = models.TextField(null=True, blank=True, verbose_name='توضیحات')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'دسته‌ی محتوا'
+        verbose_name_plural = 'دسته‌های محتوا'
+
+
 class Video(models.Model):
-    CATEGORY_CHOICES = (
-        ('N', 'خبر'),
-        ('R', 'روضه‌خوانی'),
-        ('M', 'مرثیه')
-    )
     video = models.FileField(upload_to='videos/', verbose_name='ویدیو')
     title = models.CharField(max_length=1000, verbose_name='عنوان')
     description = models.TextField(verbose_name='توضیحات')
-    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, verbose_name='دسته')
+    category = models.ForeignKey(ContentCategory, related_name='videos', verbose_name='دسته')
 
     def __str__(self):
         return self.title
@@ -21,14 +28,10 @@ class Video(models.Model):
 
 
 class VideoClip(models.Model):
-    CATEGORY_CHOICES = (
-        ('O', 'عمومی'),
-        ('T', 'تعزیه')
-    )
     video = models.FileField(upload_to='videos/', verbose_name='ویدیو')
     title = models.CharField(max_length=1000, verbose_name='عنوان')
     description = models.TextField(verbose_name='توضیحات')
-    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, verbose_name='دسته')
+    category = models.ForeignKey(ContentCategory, related_name='video_clips', verbose_name='دسته')
 
     def __str__(self):
         return self.title
@@ -39,16 +42,10 @@ class VideoClip(models.Model):
 
 
 class Image(models.Model):
-    CATEGORY_CHOICES = (
-        ('G', 'قودجان'),
-        ('H', 'همایش'),
-        ('T', 'تعزیه'),
-        ('M', 'مراسمات و برنامه‌ها')
-    )
     image = models.FileField(upload_to='videos/', verbose_name='عکس')
     title = models.CharField(max_length=1000, verbose_name='عنوان')
     description = models.TextField(verbose_name='توضیحات', null=True, blank=True)
-    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, verbose_name='دسته')
+    category = models.ForeignKey(ContentCategory, related_name='images', verbose_name='دسته')
 
     def __str__(self):
         return self.title
@@ -59,15 +56,10 @@ class Image(models.Model):
 
 
 class News(models.Model):
-    CATEGORY_CHOICES = (
-        ('G', 'قودجان'),
-        ('M', 'مجمع تعزیه آل طه'),
-        ('O', 'عمومی')
-    )
     title = models.CharField(max_length=1000, verbose_name='عنوان')
     description = models.TextField(verbose_name='متن')
     image = models.ImageField(null=True, blank=True, verbose_name='عکس')
-    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, verbose_name='دسته')
+    category = models.ForeignKey(ContentCategory, related_name='news', verbose_name='دسته')
 
     def __str__(self):
         return self.title
