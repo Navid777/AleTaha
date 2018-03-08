@@ -1,4 +1,4 @@
 django==1.11
 Pillow==5
 django_rest_framework
-drfdocs
+django-rest-swagger
