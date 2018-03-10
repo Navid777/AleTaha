@@ -133,6 +133,7 @@ REST_FRAMEWORK = {
     )
 }
 
+MEDIA_URL = '/media/'
 try:
     from AleTaha.local_settings import *
 except ImportError:

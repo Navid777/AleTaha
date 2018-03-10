@@ -12,7 +12,7 @@ class ContentCategorySerializer(serializers.ModelSerializer):
 
 
 class NewsSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.title')
+    category = ContentCategorySerializer()
 
     class Meta:
         model = News
@@ -21,7 +21,7 @@ class NewsSerializer(serializers.ModelSerializer):
 
 
 class VideoSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.title')
+    category = ContentCategorySerializer()
 
     class Meta:
         model = Video
@@ -30,7 +30,7 @@ class VideoSerializer(serializers.ModelSerializer):
 
 
 class VideoClipSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.title')
+    category = ContentCategorySerializer()
 
     class Meta:
         model = VideoClip
@@ -39,7 +39,7 @@ class VideoClipSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.title')
+    category = ContentCategorySerializer()
 
     class Meta:
         model = Image
