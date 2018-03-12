@@ -27,4 +27,3 @@ urlpatterns = [
     url(r'^education/', include('education.urls')),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

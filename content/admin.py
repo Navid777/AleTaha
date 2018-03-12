@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from content.models import Video, News, Image, VideoClip, ContentCategory
+from content.models import Video, News, Image, VideoClip, ContentCategory, NewsGroup
 
 
 class VideoAdmin(admin.ModelAdmin):
@@ -33,8 +33,15 @@ class ContentCategoryAdmin(admin.ModelAdmin):
         model = ContentCategory
 
 
+class NewsGroupAdmin(admin.ModelAdmin):
+
+    class Meta:
+        model = NewsGroup
+
+
 admin.site.register(News, NewsAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(VideoClip, ClipAdmin)
 admin.site.register(ContentCategory, ContentCategoryAdmin)
+admin.site.register(NewsGroup, NewsGroupAdmin)

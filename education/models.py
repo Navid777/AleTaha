@@ -15,14 +15,14 @@ class Class(models.Model):
 
 
 class Student(models.Model):
-    user = models.ForeignKey(User, related_name='students', verbose_name='کاربر')
+    user = models.OneToOneField(User, related_name='student', verbose_name='کاربر')
     first_name = models.CharField(max_length=200, verbose_name='نام')
     last_name = models.CharField(max_length=200, verbose_name='نام خانوادگی')
-    classes = models.ManyToManyField(Class, related_name='students', verbose_name='کلاس‌ها')
+    classes = models.ManyToManyField(Class, related_name='students', verbose_name='کلاس‌ها', blank=True)
     national_code = models.CharField(max_length=10, verbose_name='کد ملی')
     address = models.TextField(verbose_name='آدرس')
     phone = models.CharField(max_length=15, verbose_name='شماره تلفن')
-    image = models.ImageField(verbose_name='عکس')
+    image = models.ImageField(verbose_name='عکس', null=True, blank=True)
     father_name = models.CharField(max_length=500, verbose_name='نام پدر')
     year_of_birth = models.PositiveIntegerField(verbose_name='سال تولد')
 
@@ -38,14 +38,14 @@ class Student(models.Model):
 
 
 class Teacher(models.Model):
-    user = models.ForeignKey(User, related_name='teachers', verbose_name='کاربر')
+    user = models.OneToOneField(User, related_name='teacher', verbose_name='کاربر')
     first_name = models.CharField(max_length=200, verbose_name='نام')
     last_name = models.CharField(max_length=200, verbose_name='نام خانوادگی')
-    classes = models.ManyToManyField(Class, related_name='teachers', verbose_name='کلاس‌ها')
+    classes = models.ManyToManyField(Class, related_name='teachers', verbose_name='کلاس‌ها', blank=True)
     national_code = models.CharField(max_length=10, verbose_name='کد ملی')
     address = models.TextField(verbose_name='آدرس')
     phone = models.CharField(max_length=15, verbose_name='شماره تلفن')
-    image = models.ImageField(verbose_name='عکس')
+    image = models.ImageField(verbose_name='عکس', null=True, blank=True)
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name
