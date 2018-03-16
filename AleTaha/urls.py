@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from rest_framework.authtoken import views
 from django.conf.urls.static import static
 from django.conf import settings
 
+from usermanager.views import obtain_auth_token
+
 urlpatterns = [
-    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^api-token-auth/', obtain_auth_token),
     url(r'^docs/', include('rest_framework_docs.urls')),
     url(r'^content/', include('content.urls')),
     url(r'^market/', include('market.urls')),

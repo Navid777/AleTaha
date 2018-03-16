@@ -4,6 +4,7 @@ from django.db import models
 
 class Class(models.Model):
     title = models.CharField(max_length=2000, verbose_name='عنوان')
+    description = models.TextField(verbose_name='توضیحات')
     image = models.ImageField(null=True, blank=True, verbose_name='عکس')
 
     def __str__(self):

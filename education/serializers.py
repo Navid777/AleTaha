@@ -12,15 +12,6 @@ def unique_username(username):
         pass
 
 
-class ClassSerializer(serializers.ModelSerializer):
-    teachers = serializers.StringRelatedField()
-
-    class Meta:
-        model = Class
-        fields = ('title', 'image', 'teachers')
-        read_only_fields = ('title', 'image', 'teachers')
-
-
 class TeacherSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     username = serializers.CharField(write_only=True, validators=[User.username_validator, unique_username])
@@ -35,6 +26,15 @@ class TeacherSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(username=username, password=password)
         student = Teacher.objects.create(**validated_data, user=user)
         return student
+
+
+class ClassSerializer(serializers.ModelSerializer):
+    teachers = TeacherSerializer(many=True)
+
+    class Meta:
+        model = Class
+        fields = ('title', 'image', 'teachers', 'description')
+        read_only_fields = ('title', 'image', 'teachers')
 
 
 class StudentSerializer(serializers.ModelSerializer):
