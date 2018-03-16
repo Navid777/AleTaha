@@ -33,7 +33,7 @@ class ClassSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Class
-        fields = ('title', 'image', 'teachers', 'description')
+        fields = ('id', 'title', 'image', 'teachers', 'description')
         read_only_fields = ('title', 'image', 'teachers')
 
 

@@ -1,6 +1,9 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from education.models import Class
 from education.serializers import ClassSerializer, StudentSerializer, TeacherSerializer
@@ -31,3 +34,12 @@ class UserClassList(generics.ListAPIView):
         if hasattr(self.request.user, 'teacher'):
             return Class.objects.filter(teachers=self.request.user.teacher)
         return None
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def sign_up_for_class(request, class_id):
+    edu_class = get_object_or_404(Class, id=class_id)
+    edu_class.students.add(request.user.student)
+    return Response({'success': True})
+
