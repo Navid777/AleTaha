@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from education.models import Student, Teacher
@@ -5,8 +6,8 @@ from education.models import Student, Teacher
 
 class NewsGroup(models.Model):
     title = models.CharField(max_length=1000, verbose_name='عنوان')
-    students = models.ManyToManyField(Student, related_name='news_groups', verbose_name='هنرجویان')
-    teachers = models.ManyToManyField(Teacher, related_name='news_groups', verbose_name='معلمان')
+    students = models.ManyToManyField(Student, related_name='news_groups', verbose_name='هنرجویان', blank=True)
+    teachers = models.ManyToManyField(Teacher, related_name='news_groups', verbose_name='معلمان', blank=True)
 
     def __str__(self):
         return self.title
@@ -14,6 +15,11 @@ class NewsGroup(models.Model):
     class Meta:
         verbose_name = 'گروه خبری'
         verbose_name_plural = 'گروه‌های خبری'
+
+    @staticmethod
+    def get_news_group_all():
+        news_group, _ = NewsGroup.objects.get_or_create(title=settings.NEWS_GROUP_ALL_TITLE)
+        return news_group
 
 
 class ContentCategory(models.Model):

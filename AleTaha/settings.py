@@ -136,6 +136,8 @@ REST_FRAMEWORK = {
 }
 
 MEDIA_URL = '/media/'
+
+NEWS_GROUP_ALL_TITLE = 'همه'
 try:
     from AleTaha.local_settings import *
 except ImportError:
