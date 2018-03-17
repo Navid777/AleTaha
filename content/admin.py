@@ -8,30 +8,39 @@ from content.models import Video, News, Image, VideoClip, ContentCategory, NewsG
 
 
 class VideoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'category')
+    filter_horizontal = ('news_groups',)
 
     class Meta:
         model = Video
 
 
 class NewsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'category')
+    filter_horizontal = ('news_groups',)
 
     class Meta:
         model = News
 
 
 class ImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'category')
+    filter_horizontal = ('news_groups',)
 
     class Meta:
         model = Image
 
 
 class ClipAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'category')
+    filter_horizontal = ('news_groups',)
 
     class Meta:
         model = VideoClip
 
 
 class ContentCategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
 
     class Meta:
         model = ContentCategory
@@ -86,6 +95,6 @@ class NewsGroupAdmin(admin.ModelAdmin):
 admin.site.register(News, NewsAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Image, ImageAdmin)
-admin.site.register(VideoClip, ClipAdmin)
+# admin.site.register(VideoClip, ClipAdmin)
 admin.site.register(ContentCategory, ContentCategoryAdmin)
 admin.site.register(NewsGroup, NewsGroupAdmin)

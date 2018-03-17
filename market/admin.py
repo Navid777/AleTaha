@@ -4,6 +4,7 @@ from market.models import Product, ProductCategory
 
 
 class ProductAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'price', 'category')
 
     class Meta:
         model = Product
