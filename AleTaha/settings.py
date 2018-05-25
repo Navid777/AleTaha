@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_docs',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,9 @@ REST_FRAMEWORK = {
 MEDIA_URL = '/media/'
 
 NEWS_GROUP_ALL_TITLE = 'همه'
+SESSION_COOKIE_AGE = 20
 try:
     from AleTaha.local_settings import *
 except ImportError:
     pass
+

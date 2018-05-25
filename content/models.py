@@ -3,6 +3,7 @@ from django.db import models
 
 from education.models import Student, Teacher
 
+from sorl.thumbnail import ImageField
 
 class NewsGroup(models.Model):
     title = models.CharField(max_length=1000, verbose_name='عنوان')
@@ -82,7 +83,7 @@ class Image(models.Model):
 class News(models.Model):
     title = models.CharField(max_length=1000, verbose_name='عنوان')
     description = models.TextField(verbose_name='متن')
-    image = models.ImageField(null=True, blank=True, verbose_name='عکس')
+    image = ImageField(null=True, blank=True, verbose_name='عکس')
     category = models.ForeignKey(ContentCategory, related_name='news', verbose_name='دسته')
     news_groups = models.ManyToManyField(NewsGroup, related_name='news', verbose_name='مخاطبان')
 

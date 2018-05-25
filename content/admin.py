@@ -3,20 +3,23 @@ from django.contrib import admin, messages
 from django.db.models.deletion import ProtectedError
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
+from sorl.thumbnail.admin.current import AdminImageMixin
 
 from content.models import Video, News, Image, VideoClip, ContentCategory, NewsGroup
 
 
 class VideoAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'category')
+    list_display_links = ('id', 'title')
     filter_horizontal = ('news_groups',)
 
     class Meta:
         model = Video
 
 
-class NewsAdmin(admin.ModelAdmin):
+class NewsAdmin(AdminImageMixin, admin.ModelAdmin):
     list_display = ('id', 'title', 'category')
+    list_display_links = ('id', 'title')
     filter_horizontal = ('news_groups',)
 
     class Meta:
@@ -25,6 +28,7 @@ class NewsAdmin(admin.ModelAdmin):
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'category')
+    list_display_links = ('id', 'title')
     filter_horizontal = ('news_groups',)
 
     class Meta:
@@ -33,6 +37,7 @@ class ImageAdmin(admin.ModelAdmin):
 
 class ClipAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'category')
+    list_display_links = ('id', 'title')
     filter_horizontal = ('news_groups',)
 
     class Meta:
@@ -41,6 +46,7 @@ class ClipAdmin(admin.ModelAdmin):
 
 class ContentCategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'title')
+    list_display_links = ('id', 'title')
 
     class Meta:
         model = ContentCategory

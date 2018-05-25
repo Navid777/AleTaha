@@ -35,13 +35,19 @@ def national_code_validator(national_code):
         raise ValidationError('کد ملی معتبر نیست.')
 
 
+def address_validator(address):
+    if len(address) < 10:
+        raise ValidationError('آدرس باید حداقل 10 کاراکتر باشد.')
+
+
 class Student(models.Model):
-    user = models.OneToOneField(User, related_name='student', verbose_name='کاربر')
+    user = models.OneToOneField(User, related_name='student', verbose_name='کاربر',
+                                help_text='به عنوان یک کاربر اضافه کنید یا بسازید.')
     first_name = models.CharField(max_length=200, verbose_name='نام')
     last_name = models.CharField(max_length=200, verbose_name='نام خانوادگی')
     classes = models.ManyToManyField(Class, related_name='students', verbose_name='کلاس‌ها', blank=True)
     national_code = models.CharField(max_length=10, verbose_name='کد ملی', validators=[national_code_validator])
-    address = models.TextField(verbose_name='آدرس')
+    address = models.TextField(verbose_name='آدرس', validators=[address_validator])
     phone = models.CharField(max_length=15, verbose_name='شماره تلفن')
     image = models.ImageField(verbose_name='عکس', null=True, blank=True)
     father_name = models.CharField(max_length=500, verbose_name='نام پدر')
@@ -54,17 +60,18 @@ class Student(models.Model):
         return self.get_full_name()
 
     class Meta:
-        verbose_name = 'هنرآموز'
-        verbose_name_plural = 'هنرآموزان'
+        verbose_name = 'هنرجو'
+        verbose_name_plural = 'هنرجویان'
 
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, related_name='teacher', verbose_name='کاربر')
+    user = models.OneToOneField(User, related_name='teacher', verbose_name='کاربر',
+                                help_text='به عنوان یک کاربر اضافه کنید یا بسازید.')
     first_name = models.CharField(max_length=200, verbose_name='نام')
     last_name = models.CharField(max_length=200, verbose_name='نام خانوادگی')
     classes = models.ManyToManyField(Class, related_name='teachers', verbose_name='کلاس‌ها', blank=True)
     national_code = models.CharField(max_length=10, verbose_name='کد ملی')
-    address = models.TextField(verbose_name='آدرس')
+    address = models.TextField(verbose_name='آدرس', validators=[address_validator])
     phone = models.CharField(max_length=15, verbose_name='شماره تلفن')
     image = models.ImageField(verbose_name='عکس', null=True, blank=True)
 
@@ -75,5 +82,19 @@ class Teacher(models.Model):
         return self.get_full_name()
 
     class Meta:
-        verbose_name = 'معلم'
-        verbose_name_plural = 'معلمان'
+        verbose_name = 'استاد'
+        verbose_name_plural = 'اساتید'
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(Teacher, related_name='messages', verbose_name='فرستنده')
+    receiver = models.ForeignKey(Class, related_name='messages', verbose_name='کلاس دریافت کننده')
+    message = models.TextField(verbose_name='متن پیام')
+    confirmed = models.BooleanField(default=False, verbose_name='تاییدشده')
+
+    def __str__(self):
+        return self.message
+
+    class Meta:
+        verbose_name = 'پیام'
+        verbose_name_plural = 'پیامها'
